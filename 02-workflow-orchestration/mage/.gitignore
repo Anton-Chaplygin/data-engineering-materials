@@ -164,12 +164,16 @@ docker-compose.override.yml
 # front-end
 node_modules
 .npmrc
-
+__init__.py
 # Scratch files
 scratch*
 /mage_data*
 *secrets*.json
-magic-zoomcamp
+magic-zoomcamp/*
+!magic-zoomcamp/data_exporters/
+!magic-zoomcamp/data_loaders/
+!magic-zoomcamp/transformers/
+!magic-zoomcamp/pipelines/
 *.json
 
 titanic_clean.csv
