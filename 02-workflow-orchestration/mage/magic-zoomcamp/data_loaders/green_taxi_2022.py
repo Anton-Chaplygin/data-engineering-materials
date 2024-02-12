@@ -1,6 +1,8 @@
 import io
 import pandas as pd
 import requests
+import re
+
 if 'data_loader' not in globals():
     from mage_ai.data_preparation.decorators import data_loader
 if 'test' not in globals():
@@ -27,11 +29,20 @@ def load_data_from_api(*args, **kwargs):
         'https://d37ci6vzurychx.cloudfront.net/trip-data/green_tripdata_2022-12.parquet'
     ]
 
+    pattern = r'(\d{4})-(\d{2})\.parquet$'
+
     dfs = []
 
     for month in urls:
        
         url = month
+
+        match = re.search(pattern, url)
+        if match:
+            year_number = match.group(1)
+            month_number = match.group(2)
+        else:
+            print("Can not take month from the file path")
 
         taxi_dtypes = {
             'VendorID': pd.Int64Dtype(),
@@ -55,6 +66,7 @@ def load_data_from_api(*args, **kwargs):
         parse_dates = ['lpep_pickup_datetime', 'lpep_dropoff_datetime']
 
         current_df = pd.read_parquet(url)
+        current_df['source_file'] = "-".join([year_number, month_number])
         dfs.append(current_df)
 
 
