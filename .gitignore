@@ -7,3 +7,5 @@
 01-docker-terraform/pipeline.py
 01-docker-terraform/taxi+_zone_lookup.csv
 01-docker-terraform/test_ingest_data.py
+*.duckdb*
+.ipynb_checkpoints/
